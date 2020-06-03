@@ -182,7 +182,8 @@ object Form1: TForm1
     ItemHeight = 13
     Items.Strings = (
       'Rio'
-      'Seattle')
+      'Seattle'
+      'Sydney')
     ParentCtl3D = False
     TabOrder = 15
   end
@@ -195,7 +196,8 @@ object Form1: TForm1
     Columns = 3
     Items.Strings = (
       'Rio'
-      'Tokyo')
+      'Tokyo'
+      'Sydney')
     TabOrder = 16
   end
   object ActionList1: TActionList

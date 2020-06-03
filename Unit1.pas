@@ -9,9 +9,7 @@ uses
   Vcl.StdActns;
 
 type
-  {$SCOPEDENUMS ON}
-  TDelphiVersion = (Tokyo=19,Rio=20);
-  {$SCOPEDENUMS OFF}
+  TDelphiVersion = (Tokyo=19,Rio=20,Sydney=21);
 
   TForm1 = class(TForm)
     ListBox1: TListBox;
@@ -46,6 +44,7 @@ type
   private
     FVersionList: TStrings;
     function StringToVersion(const Value: string): TDelphiVersion;
+    function StringToVersionNumber(const Value: String): Integer;
     function LibraryKey(AVersion: string): string;
     procedure LoadAvailableVersions;
     function LookUpVersionName(const Value: string): string;
@@ -145,6 +144,18 @@ begin
   Result := TRttiEnumerationType.GetValue<TDelphiVersion>(Value);
 end;
 
+function TForm1.StringToVersionNumber(const Value: String): Integer;
+begin
+  if SameText(Value, 'Tokyo') then
+     Result := 19
+  else if SameText(Value, 'Rio') then
+     Result := 20
+  else if SameText(Value, 'Sydney') then
+     Result := 21
+  else
+     raise Exception.Create('Unrecognised Version');
+end;
+
 procedure TForm1.CleanUpButtonClick(Sender: TObject);
 var ts: TStringList;
   I: Integer;
@@ -188,9 +199,10 @@ begin
 end;
 
 function TForm1.LibraryKey(AVersion: string): string;
+var lVersion: Integer;
 begin
-  result := SRootPath +
-    Integer(StringToVersion(AVersion)).ToString + '.0\Library\'
+  lVersion := StringToVersionNumber(AVersion);
+  result := SRootPath + lVersion.ToString + '.0\Library\'
 end;
 
 procedure TForm1.LoadAvailableVersions;
